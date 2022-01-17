@@ -1,0 +1,6 @@
+{
+    "require": {
+        "evilfreelancer/routeros-api-php": "^1.4",
+        "art-of-wifi/unifi-api-client": "^1.1"
+    }
+}
