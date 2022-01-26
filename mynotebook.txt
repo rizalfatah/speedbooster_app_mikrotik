@@ -1,0 +1,12 @@
+BUG ketika hostname perangkat tidak tersedia di unifi
+
+++ Tambahkan
+        urgent
+            ; add proses ganti queue
+
+; Login
+; laporan
+; Exception ketika link down ke router dan unifi
+
+
+

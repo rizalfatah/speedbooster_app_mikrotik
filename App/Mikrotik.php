@@ -52,7 +52,7 @@ class Mikrotik
     {
         $countListSpeedbooster = 0;
 
-        foreach (IP_STORE as $ip) {
+        foreach (IP_STORE_MULTIMEDIA as $ip) {
             $router = new Mikrotik($ip);
             $countListSpeedbooster += count($router->getQueueSpeedbooster());
         }

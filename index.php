@@ -5,9 +5,10 @@ include_once(__DIR__ . '/template/header.php');
 
 use App\Mikrotik;
 use App\Unifi;
+// use Config;
 
-$unifi = new Unifi();
-$mikrotik = new Mikrotik(IP_STORE['merapi']);
+$unifi = new Unifi(IP_STORE_PUBLIC['merapi']);
+$mikrotik = new Mikrotik(IP_DEFAULT);
 ?>
 
 <!-- Navbar -->
@@ -46,8 +47,8 @@ $mikrotik = new Mikrotik(IP_STORE['merapi']);
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link">
-    <img src="assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-wight fs-5">Internet Learning Cafe</span>
+    <img src="assets/images/ilc-logo.png" alt="ILC Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-wight fs-5">ILC</span>
   </a>
 
   <!-- Sidebar -->
@@ -55,7 +56,7 @@ $mikrotik = new Mikrotik(IP_STORE['merapi']);
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="vendor/almasaeed2010/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
         <a href="#" class="d-block">BARISTA NEXT LEVEL YEAH</a>
@@ -65,21 +66,22 @@ $mikrotik = new Mikrotik(IP_STORE['merapi']);
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-header">EXAMPLES</li>
+        <li class="nav-header">MENU</li>
+
         <li class="nav-item">
-          <a href="pages/calendar.html" class="nav-link">
+          <a href="pages/gallery.html" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
             <p>
-              Calendar
-              <span class="badge badge-info right">2</span>
+              Cetak Laporan
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="pages/gallery.html" class="nav-link">
-            <i class="nav-icon far fa-image"></i>
+          <a href="pages/calendar.html" class="nav-link">
+            <i class="nav-icon far sign-out-alt"></i>
             <p>
-              Gallery
+              Logout
+              <span class="badge badge-info right">2</span>
             </p>
           </a>
         </li>
@@ -157,10 +159,6 @@ $mikrotik = new Mikrotik(IP_STORE['merapi']);
               <button type="submit" name="submit" class="btn btn-primary">Cek</button>
             </form>
 
-
-
-
-
             <?php
             if (isset($_POST['submit'])) {
               $account = $mikrotik->getDetailDataVoucher($_POST['usernameAccount']);
@@ -170,7 +168,11 @@ $mikrotik = new Mikrotik(IP_STORE['merapi']);
                   <h5> Username : <?= $account['user'] ?> </h5>
                   <h5> IP Address : <?= $account['address'] ?> </h5>
                   <h5> Nama Perangkat : <?= $unifi->getHostnameClient($account['mac-address'])  ?> </h5>
+
+                  <button type="submit" name="submit" class="btn btn-primary" disabled>Proses Speedbooster</button>
                 </div>
+
+
             <?php
               } else {
                 echo 'tidak ditemukan';

@@ -6,9 +6,17 @@ use UniFi_API\Client;
 
 class Unifi
 {
+
+    public String $ipStore;
+
+
+    public function __construct($ip)
+    {
+        $this->ipStore = $ip;
+    }
     private function connection(): Client
     {
-        $controller_url = 'https://' . IP_STORE['merapi'] . ':8443';
+        $controller_url = "https://{$this->ipStore}:8443";
         $site_id = 'default';
         $controller_version = '6.2.26';
         $connection = new Client(UNIFI_USERNAME, UNIFI_PASSWORD, $controller_url, $site_id, $controller_version, false);
@@ -31,18 +39,23 @@ class Unifi
         }
     }
 
-    public function getHostnameClient(String $mac): String
+    public function getHostnameClient(String $mac): ?String
     {
 
         $connection = $this->connection();
         $login = $connection->login();
 
+        // bug ketika tidak ada hostname dalam array (user prevent show hostname)
         if ($login) {
             $results = $connection->list_clients();
             foreach ($results as $result) {
-
+                // var_dump($result);
                 if (strtoupper($result->mac) == $mac) {
-                    return $result->hostname;
+                    // ada kemungkinan user tidak memiliki hostname
+                    if (isset($result->hostname))
+                        return $result->hostname;
+                    else
+                        return $result->mac;
                 }
             }
         } else {
